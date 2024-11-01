@@ -5,22 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ControleDeContatos.Migrations
 {
-    public partial class CriacaoTabelaUsuario : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ContatoModel",
-                table: "ContatoModel");
-
-            migrationBuilder.RenameTable(
-                name: "ContatoModel",
-                newName: "Contatos");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Contatos",
-                table: "Contatos",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "Contatos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nòme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contatos", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Usuarios",
@@ -45,20 +47,10 @@ namespace ControleDeContatos.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Contatos");
+
+            migrationBuilder.DropTable(
                 name: "Usuarios");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Contatos",
-                table: "Contatos");
-
-            migrationBuilder.RenameTable(
-                name: "Contatos",
-                newName: "ContatoModel");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ContatoModel",
-                table: "ContatoModel",
-                column: "Id");
         }
     }
 }
